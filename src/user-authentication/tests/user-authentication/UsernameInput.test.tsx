@@ -6,7 +6,7 @@ import UsernameInput from '../../UsernameInput';
 
 describe('UsernameInput', () => {
   test('renders an input field for username', () => {
-    render(<UsernameInput />);
+    render(<UsernameInput id={"username"} />);
     const usernameInputElement = screen.getByLabelText(/username/i);
     expect(usernameInputElement).toBeInTheDocument();
     expect(usernameInputElement).toHaveAttribute('type', 'text');

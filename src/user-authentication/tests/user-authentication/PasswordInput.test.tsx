@@ -5,9 +5,9 @@ import PasswordInput from '../../PasswordInput';
 
 describe('PasswordInput', () => {
   it('renders an input field for password', () => {
-    render(<PasswordInput />);
+    render(<PasswordInput id={"password"} />);
     const passwordInputElement = screen.getByLabelText(/password/i);
     expect(passwordInputElement).toBeInTheDocument();
-    expect(passwordInputElement).toHaveAttribute('type', 'text');
+    expect(passwordInputElement).toHaveAttribute('type', 'password');
   })
 })
