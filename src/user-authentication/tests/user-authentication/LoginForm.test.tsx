@@ -52,7 +52,7 @@ describe('LoginForm', () => {
     render(<LoginForm onSubmit={mockSubmit} />);
     const usernameInput = screen.getByLabelText(/username/i);
     const passwordInput = screen.getByLabelText(/password/i);
-    const form = screen.getByRole('form');
+    const form = screen.getByTestId('login-form');
 
     fireEvent.change(usernameInput, { target: { value: 'testuser' } });
     fireEvent.change(passwordInput, { target: { value: 'password123' } });

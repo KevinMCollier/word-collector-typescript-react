@@ -4,7 +4,7 @@ import LoginButton from "./LoginButton";
 
 const LoginForm = () => {
   return (
-    <form>
+    <form data-testid="login-form">
       <div>
         <UsernameInput id="username" />
       </div>
