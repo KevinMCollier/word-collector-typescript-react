@@ -46,4 +46,22 @@ describe('LoginForm', () => {
 
     expect(passwordInput.value).toBe('testpassword');
   })
+
+  it('calls onSubmit with updated username and password when form is submitted', () => {
+    const mockSubmit = jest.fn();
+    render(<LoginForm onSubmit={mockSubmit} />);
+    const usernameInput = screen.getByLabelText(/username/i);
+    const passwordInput = screen.getByLabelText(/password/i);
+    const form = screen.getByRole('form');
+
+    fireEvent.change(usernameInput, { target: { value: 'testuser' } });
+    fireEvent.change(passwordInput, { target: { value: 'password123' } });
+    fireEvent.submit(form);
+
+    expect(mockSubmit).toHaveBeenCalledWith({
+      username: 'testuser',
+      password: 'password123',
+    });
+  });
+
 })
