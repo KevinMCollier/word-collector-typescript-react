@@ -53,9 +53,9 @@ describe('LoginForm', () => {
     render(<LoginForm onSubmit={mockOnSubmit} />);
     const passwordInput = screen.getByLabelText(/password/i) as HTMLInputElement;
 
-    fireEvent.change(passwordInput, { target: { value: 'testpassword' } });
+    fireEvent.change(passwordInput, { target: { value: 'password123' } });
 
-    expect(passwordInput.value).toBe('testpassword');
+    expect(passwordInput.value).toBe('password123');
   })
 
   it('calls onSubmit with updated username and password when form is submitted', () => {

@@ -5,10 +5,15 @@ import UsernameInput from '../../UsernameInput';
 
 
 describe('UsernameInput', () => {
-  test('renders an input field for username', () => {
-    render(<UsernameInput id={"username"} />);
+  test('renders the correct value in input field for username', () => {
+    const mockValue = "testuser";
+    const mockOnChange = jest.fn()
+
+    render(<UsernameInput id="username" value={mockValue} onChange={mockOnChange} />);
     const usernameInputElement = screen.getByLabelText(/username/i);
+
     expect(usernameInputElement).toBeInTheDocument();
     expect(usernameInputElement).toHaveAttribute('type', 'text');
+    expect(usernameInputElement).toHaveValue(mockValue);
   });
 });
