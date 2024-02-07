@@ -4,7 +4,9 @@ import LoginForm from '../../LoginForm';
 
 describe('LoginForm', () => {
   it('renders UsernameInput', () => {
-    render(<LoginForm />);
+    const mockOnSubmit = jest.fn();
+
+    render(<LoginForm onSubmit={mockOnSubmit} />);
 
     const usernameInput = screen.getByLabelText(/username/i);
 
@@ -13,7 +15,9 @@ describe('LoginForm', () => {
   })
 
   it('renders PasswordInput', () => {
-    render(<LoginForm />);
+    const mockOnSubmit = jest.fn();
+
+    render(<LoginForm onSubmit={mockOnSubmit} />);
 
     const passwordInput = screen.getByLabelText(/password/i);
 
@@ -22,7 +26,9 @@ describe('LoginForm', () => {
   })
 
   it('renders LoginButton', () => {
-    render(<LoginForm />);
+    const mockOnSubmit = jest.fn();
+
+    render(<LoginForm onSubmit={mockOnSubmit} />);
 
     const loginButton = screen.getByRole('button', { name: /login/i });
 
@@ -30,7 +36,10 @@ describe('LoginForm', () => {
   })
 
   it('updates state on user input for UsernameInput field', () => {
-    render(<LoginForm />);
+    const mockOnSubmit = jest.fn();
+
+    render(<LoginForm onSubmit={mockOnSubmit} />);
+
     const usernameInput = screen.getByLabelText(/username/i) as HTMLInputElement;
 
     fireEvent.change(usernameInput, { target: { value: 'testuser' } });
@@ -39,7 +48,9 @@ describe('LoginForm', () => {
   })
 
   it('updates state on user input for PasswordInput field', () => {
-    render(<LoginForm />);
+    const mockOnSubmit = jest.fn();
+
+    render(<LoginForm onSubmit={mockOnSubmit} />);
     const passwordInput = screen.getByLabelText(/password/i) as HTMLInputElement;
 
     fireEvent.change(passwordInput, { target: { value: 'testpassword' } });
