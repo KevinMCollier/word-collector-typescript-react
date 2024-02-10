@@ -31,4 +31,15 @@ describe('LoginService', () => {
 
     expect(response).toEqual(expectedResponse);
   })
+
+  it('fails to log in with invalid credentials', async () => {
+    global.fetch = jest.fn(() =>
+      Promise.resolve({
+        ok: false,
+        status: 401,
+        json: () => Promise.resolve({ error: 'Invalid credentials' }),
+      })
+    ) as jest.Mock;
+    await expect(login('invalidUser', 'wrongPassword')).rejects.toThrow('Login failed ya jabroni');
+  })
 })

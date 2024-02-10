@@ -8,7 +8,7 @@ const login = async (username: string, password: string): Promise<{ token: strin
   });
 
   if (!response.ok) {
-    throw new Error('Login failed you jabroni');
+    throw new Error('Login failed ya jabroni');
   }
 
   return response.json();
