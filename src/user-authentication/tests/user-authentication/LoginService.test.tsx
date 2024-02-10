@@ -42,4 +42,10 @@ describe('LoginService', () => {
     ) as jest.Mock;
     await expect(login('invalidUser', 'wrongPassword')).rejects.toThrow('Login failed ya jabroni');
   })
+
+  it('handles network errors gracefully', async () => {
+    global.fetch = jest.fn(() => Promise.reject(new Error('Network Error')));
+
+    await expect(login('validUser', 'validPassword')).rejects.toThrow('Network Error');
+  });
 })
