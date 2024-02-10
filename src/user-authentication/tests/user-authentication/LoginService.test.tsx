@@ -1,3 +1,18 @@
+import { login } from '../../LoginService'
+
+beforeEach(() => {
+  global.fetch = jest.fn(() => {
+    return Promise.resolve({
+      ok: true,
+      json: () => Promise.resolve({ token: 'fake_token' }),
+    })
+  }) as jest.Mock;
+});
+
+afterEach(() => {
+  jest.restoreAllMocks();
+})
+
 describe('LoginService', () => {
   it('successfully logs in with valid credentials and returns a token', async () => {
     const apiEndpoint = '/api/login';
