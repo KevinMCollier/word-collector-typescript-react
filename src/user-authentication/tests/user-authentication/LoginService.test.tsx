@@ -48,4 +48,20 @@ describe('LoginService', () => {
 
     await expect(login('validUser', 'validPassword')).rejects.toThrow('Network Error');
   });
+
+  it('extracts and returns user information upon successful login', async () => {
+    global.fetch = jest.fn(() =>
+      Promise.resolve({
+        ok:true,
+        json: () => Promise.resolve({ token: 'fake_token', user: { id: 1, email: 'user@example.com' } })
+      })
+    ) as jest.Mock;
+
+    const response = await login('validUser', 'validPassword');
+
+    expect(response).toEqual({
+      token: 'fake_token',
+      user: { id: 1, email: 'user@example.com' }
+    });
+  });
 })
