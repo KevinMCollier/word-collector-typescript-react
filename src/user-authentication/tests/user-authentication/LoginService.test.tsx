@@ -1,5 +1,9 @@
 import { login } from '../../LoginService'
 
+beforeAll(() => {
+  process.env.REACT_APP_WORD_COLLECTOR_API_URL = 'http://localhost:3000';
+})
+
 beforeEach(() => {
   global.fetch = jest.fn(() => {
     return Promise.resolve({
@@ -15,7 +19,7 @@ afterEach(() => {
 
 describe('LoginService', () => {
   it('successfully logs in with valid credentials and returns a token', async () => {
-    const apiEndpoint = '/api/login';
+    const apiEndpoint = 'http://localhost:3000/api/login';
     const username = 'validUser';
     const password = 'validPassword';
     const expectedResponse = { token: 'fake_token' };
