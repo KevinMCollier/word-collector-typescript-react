@@ -13,6 +13,14 @@ beforeEach(() => {
   }) as jest.Mock;
 });
 
+beforeEach(() => {
+  Storage.prototype.setItem = jest.fn();
+  global.fetch = jest.fn(() => Promise.resolve({
+    ok: true,
+    json: () => Promise.resolve({ token: 'fake_token' }),
+  })) as jest.Mock;
+})
+
 afterEach(() => {
   jest.restoreAllMocks();
 })
@@ -68,4 +76,19 @@ describe('LoginService', () => {
       user: { id: 1, email: 'user@example.com' }
     });
   });
-})
+
+  it('stores token in localStorage on successful login', async () => {
+    const username = 'validUser';
+    const password = 'validPassword';
+    const token = 'fake_token';
+
+    global.fetch = jest.fn(() => Promise.resolve({
+      ok: true,
+      json: () => Promise.resolve({ token }),
+    })) as jest.Mock;
+
+    await login(username, password);
+
+    expect(localStorage.setItem).toHaveBeenCalledWith('token', token);
+  });
+});

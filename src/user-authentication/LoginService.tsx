@@ -13,7 +13,11 @@ const login = async (username: string, password: string): Promise<{ token: strin
     throw new Error('Login failed ya jabroni');
   }
 
-  return response.json();
+  const loginResponseData = await response.json();
+
+  localStorage.setItem('token', loginResponseData.token);
+
+  return loginResponseData;
 }
 
 export { login };

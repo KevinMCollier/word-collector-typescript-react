@@ -8,7 +8,11 @@ import { LoginFormProps } from '../../LoginFormProps';
 jest.mock('../../LoginService', () => ({
   login: jest.fn()
 }));
-// const mockedLogin = loginService.login as jest.MockedFunction<typeof loginService.login>;
+
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useNavigate: () => jest.fn(),
+}));
 
 jest.mock('../..//LoginForm', () => {
   const MockLoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => (
@@ -34,6 +38,8 @@ describe('LoginPage with mocked LoginForm', () => {
     const mockLogin = loginService.login as jest.MockedFunction<typeof loginService.login>;
     const fakeToken = 'fake_token';
     mockLogin.mockResolvedValue({ token: fakeToken });
+
+    // const mockNavigate = require('react-router-dom').useNavigate();
 
     render(
       <MemoryRouter>
