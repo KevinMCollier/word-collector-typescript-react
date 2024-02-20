@@ -14,7 +14,6 @@ const login = async (username: string, password: string): Promise<{ token: strin
   }
 
   const loginResponseData = await response.json();
-
   localStorage.setItem('token', loginResponseData.token);
 
   return loginResponseData;

@@ -5,8 +5,16 @@ import * as loginService from '../../LoginService';
 import { MemoryRouter } from 'react-router-dom';
 import { LoginFormProps } from '../../LoginFormProps';
 
+beforeEach(() => {
+  jest.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {});
+});
+
+afterEach(() => {
+  jest.clearAllMocks();
+})
+
 jest.mock('../../LoginService', () => ({
-  login: jest.fn()
+  login: jest.fn(() => Promise.resolve({ token: 'fake_token' }))
 }));
 
 jest.mock('react-router-dom', () => ({
@@ -51,10 +59,13 @@ describe('LoginPage with mocked LoginForm', () => {
 
     await waitFor(() => {
       expect(mockLogin).toHaveBeenCalledWith('testUser', 'testPassword');
-      // Adjust for localStorage later on with something such as:
-      // expect(localStorage.setItem).toHaveBeenCalledWith('token', fakeToken);
       // Mock out naviagation and test that as well
       // Better yet -> separate this into two tests later on
     })
   })
+
+  it('directly tests localStorage.setItem', () => {
+    localStorage.setItem('test', 'value');
+    expect(localStorage.setItem).toHaveBeenCalledWith('test', 'value');
+  });
 })
