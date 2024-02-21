@@ -1,7 +1,6 @@
 describe('Login Process', () => {
   it('successfully logs in', () => {
-    cy.visit('http://localhost:3000/api/login');
-    // Double check the endpoint in your backend
+    cy.visit('http://localhost:3001/login');
 
     cy.get('input[name=username]').type('validUser');
     cy.get('input[name=password]').type('validPassword');
