@@ -28,17 +28,17 @@ afterEach(() => {
 describe('LoginService', () => {
   it('successfully logs in with valid credentials and returns a token', async () => {
     const apiEndpoint = 'http://localhost:3000/api/login';
-    const username = 'validUser';
+    const email = 'validUser';
     const password = 'validPassword';
     const expectedResponse = { token: 'fake_token' };
-    const response = await login(username, password);
+    const response = await login(email, password);
 
     expect(fetch).toHaveBeenCalledWith(apiEndpoint, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ username, password }),
+      body: JSON.stringify({ email, password }),
     });
 
     expect(response).toEqual(expectedResponse);
@@ -78,7 +78,7 @@ describe('LoginService', () => {
   });
 
   it('stores token in localStorage on successful login', async () => {
-    const username = 'validUser';
+    const email = 'validUser';
     const password = 'validPassword';
     const token = 'fake_token';
 
@@ -87,7 +87,7 @@ describe('LoginService', () => {
       json: () => Promise.resolve({ token }),
     })) as jest.Mock;
 
-    await login(username, password);
+    await login(email, password);
 
     expect(localStorage.setItem).toHaveBeenCalledWith('token', token);
   });

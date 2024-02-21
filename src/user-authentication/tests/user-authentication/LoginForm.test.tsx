@@ -3,15 +3,15 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import LoginForm from '../../LoginForm';
 
 describe('LoginForm', () => {
-  it('renders UsernameInput', () => {
+  it('renders emailInput', () => {
     const mockOnSubmit = jest.fn();
 
     render(<LoginForm onSubmit={mockOnSubmit} />);
 
-    const usernameInput = screen.getByLabelText(/username/i);
+    const emailInput = screen.getByLabelText(/email/i);
 
-    expect(usernameInput).toBeInTheDocument();
-    expect(usernameInput).toHaveAttribute('type', 'text');
+    expect(emailInput).toBeInTheDocument();
+    expect(emailInput).toHaveAttribute('type', 'text');
   })
 
   it('renders PasswordInput', () => {
@@ -35,16 +35,16 @@ describe('LoginForm', () => {
     expect(loginButton).toBeInTheDocument();
   })
 
-  it('updates state on user input for UsernameInput field', () => {
+  it('updates state on user input for emailInput field', () => {
     const mockOnSubmit = jest.fn();
 
     render(<LoginForm onSubmit={mockOnSubmit} />);
 
-    const usernameInput = screen.getByLabelText(/username/i) as HTMLInputElement;
+    const emailInput = screen.getByLabelText(/email/i) as HTMLInputElement;
 
-    fireEvent.change(usernameInput, { target: { value: 'testuser' } });
+    fireEvent.change(emailInput, { target: { value: 'testuser' } });
 
-    expect(usernameInput.value).toBe('testuser');
+    expect(emailInput.value).toBe('testuser');
   })
 
   it('updates state on user input for PasswordInput field', () => {
@@ -58,19 +58,19 @@ describe('LoginForm', () => {
     expect(passwordInput.value).toBe('password123');
   })
 
-  it('calls onSubmit with updated username and password when form is submitted', () => {
+  it('calls onSubmit with updated email and password when form is submitted', () => {
     const mockSubmit = jest.fn();
     render(<LoginForm onSubmit={mockSubmit} />);
-    const usernameInput = screen.getByLabelText(/username/i);
+    const emailInput = screen.getByLabelText(/email/i);
     const passwordInput = screen.getByLabelText(/password/i);
     const form = screen.getByTestId('login-form');
 
-    fireEvent.change(usernameInput, { target: { value: 'testuser' } });
+    fireEvent.change(emailInput, { target: { value: 'testuser' } });
     fireEvent.change(passwordInput, { target: { value: 'password123' } });
     fireEvent.submit(form);
 
     expect(mockSubmit).toHaveBeenCalledWith({
-      username: 'testuser',
+      email: 'testuser',
       password: 'password123',
     });
   });

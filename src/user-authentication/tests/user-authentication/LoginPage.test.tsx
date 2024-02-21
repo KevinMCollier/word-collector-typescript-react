@@ -24,7 +24,7 @@ jest.mock('react-router-dom', () => ({
 
 jest.mock('../..//LoginForm', () => {
   const MockLoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => (
-    <form onSubmit={(e) => { e.preventDefault(); onSubmit({ username: 'testUser', password: 'testPassword' }); }}>
+    <form onSubmit={(e) => { e.preventDefault(); onSubmit({ email: 'testUser', password: 'testPassword' }); }}>
       <button type="submit">Login</button>
     </form>
   );

@@ -4,9 +4,9 @@ import { useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
   const navigate = useNavigate();
-  const handleSubmit = async (data: { username: string; password: string }) => {
+  const handleSubmit = async (data: { email: string; password: string }) => {
     try {
-      await login(data.username, data.password);
+      await login(data.email, data.password);
       navigate('/homepage');
     } catch (error) {
     }
