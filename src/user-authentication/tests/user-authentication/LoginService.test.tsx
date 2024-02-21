@@ -27,7 +27,7 @@ afterEach(() => {
 
 describe('LoginService', () => {
   it('successfully logs in with valid credentials and returns a token', async () => {
-    const apiEndpoint = 'http://localhost:3000/api/login';
+    const apiEndpoint = 'http://localhost:3000/users/sign_in';
     const email = 'validUser';
     const password = 'validPassword';
     const expectedResponse = { token: 'fake_token' };
