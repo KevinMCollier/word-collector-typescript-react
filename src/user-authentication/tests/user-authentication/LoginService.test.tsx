@@ -91,4 +91,24 @@ describe('LoginService', () => {
 
     expect(localStorage.setItem).toHaveBeenCalledWith('token', token);
   });
+
+  it('ensures the payload structure matches the expected format', async () => {
+    const email = 'user@example.com';
+    const password = 'password';
+    const token = 'fake_token';
+    const mockResponse = { user: { email, authentication_token: token } };
+
+    global.fetch = jest.fn(() => Promise.resolve({
+      ok: true,
+      json: () => Promise.resolve(mockResponse),
+    })) as jest.Mock;
+
+    const response = await login(email, password);
+
+    expect(response).toEqual({
+      user: { email },
+      token
+    });
+    expect(localStorage.setItem).toHaveBeenCalledWith('token', token);
+  })
 });
