@@ -8,40 +8,32 @@ beforeEach(() => {
   global.fetch = jest.fn(() => {
     return Promise.resolve({
       ok: true,
-      json: () => Promise.resolve({ token: 'fake_token' }),
+      json: () => Promise.resolve({ user: { email: 'user@example.com', authentication_token: 'fake_token'} }),
     })
   }) as jest.Mock;
-});
 
-beforeEach(() => {
   Storage.prototype.setItem = jest.fn();
-  global.fetch = jest.fn(() => Promise.resolve({
-    ok: true,
-    json: () => Promise.resolve({ token: 'fake_token' }),
-  })) as jest.Mock;
-})
+});
 
 afterEach(() => {
   jest.restoreAllMocks();
 })
 
 describe('LoginService', () => {
-  it('successfully logs in with valid credentials and returns a token', async () => {
+  it('calls fetch with the correct parameters when logging in', async () => {
     const apiEndpoint = 'http://localhost:3000/users/sign_in';
-    const email = 'validUser';
+    const email = 'user@example.com';
     const password = 'validPassword';
-    const expectedResponse = { token: 'fake_token' };
-    const response = await login(email, password);
+
+    await login(email, password);
 
     expect(fetch).toHaveBeenCalledWith(apiEndpoint, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ user: { email, password } }),
     });
-
-    expect(response).toEqual(expectedResponse);
   })
 
   it('fails to log in with invalid credentials', async () => {
@@ -62,30 +54,22 @@ describe('LoginService', () => {
   });
 
   it('extracts and returns user information upon successful login', async () => {
-    global.fetch = jest.fn(() =>
-      Promise.resolve({
-        ok:true,
-        json: () => Promise.resolve({ token: 'fake_token', user: { id: 1, email: 'user@example.com' } })
-      })
-    ) as jest.Mock;
+    const email = 'user@example.com';
+    const password = 'validPassword';
+    const response = await login(email, password);
 
-    const response = await login('validUser', 'validPassword');
-
-    expect(response).toEqual({
+    const expectedResponse = {
+      user: { email },
       token: 'fake_token',
-      user: { id: 1, email: 'user@example.com' }
-    });
+    };
+
+    expect(response).toEqual(expectedResponse);
   });
 
   it('stores token in localStorage on successful login', async () => {
     const email = 'validUser';
     const password = 'validPassword';
     const token = 'fake_token';
-
-    global.fetch = jest.fn(() => Promise.resolve({
-      ok: true,
-      json: () => Promise.resolve({ token }),
-    })) as jest.Mock;
 
     await login(email, password);
 
@@ -96,12 +80,6 @@ describe('LoginService', () => {
     const email = 'user@example.com';
     const password = 'password';
     const token = 'fake_token';
-    const mockResponse = { user: { email, authentication_token: token } };
-
-    global.fetch = jest.fn(() => Promise.resolve({
-      ok: true,
-      json: () => Promise.resolve(mockResponse),
-    })) as jest.Mock;
 
     const response = await login(email, password);
 
@@ -109,6 +87,6 @@ describe('LoginService', () => {
       user: { email },
       token
     });
-    expect(localStorage.setItem).toHaveBeenCalledWith('token', token);
+    expect(localStorage.setItem).toHaveBeenCalledWith('token', token)
   })
 });
