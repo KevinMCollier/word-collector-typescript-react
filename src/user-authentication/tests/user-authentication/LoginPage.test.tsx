@@ -45,7 +45,7 @@ describe('LoginPage with mocked LoginForm', () => {
   it('calls login service with credentials and redirects on success', async () => {
     const mockLogin = loginService.login as jest.MockedFunction<typeof loginService.login>;
     const fakeToken = 'fake_token';
-    mockLogin.mockResolvedValue({ token: fakeToken });
+    mockLogin.mockResolvedValue({ user: { email: 'user@example.com' }, token: fakeToken });
 
     // const mockNavigate = require('react-router-dom').useNavigate();
 
