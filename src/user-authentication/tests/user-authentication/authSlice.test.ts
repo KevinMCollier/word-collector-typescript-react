@@ -13,4 +13,12 @@ describe('authSlice', () => {
       token: 'fake_token',
     });
   });
+
+  it('returns null for both user and token in state upon logout', () => {
+    store.dispatch(logout());
+    expect(store.getState().auth).toEqual({
+      user: null,
+      token: null
+    });
+  });
 })
