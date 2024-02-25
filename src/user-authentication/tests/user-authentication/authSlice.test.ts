@@ -1,5 +1,5 @@
 import { store } from '../../../store';
-import { login } from '../../authSlice';
+import { login, logout } from '../../authSlice';
 
 describe('authSlice', () => {
   it('should initialize state with no user and no token', () => {
